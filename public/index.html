@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html ng-app="tournamentApp">
+
+<head>
+    <title>Torneio da Nibo</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+<body ng-controller="tournamentCtrl as vm">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand">Administração do Torneio</a>
+
+        <div id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" ng-click="resetTournament();">Reiniciar Torneio</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" ng-click="manageTeams()">Gerenciar Times</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <div class="container">
+        <h1>Nibo Tournament</h1>
+        <div class="tournament-bracket tournament-bracket--rounded">
+            <div class="tournament-bracket__round tournament-bracket__round--quarterfinals">
+                <h3 class="tournament-bracket__round-title">Quartas de finais</h3>
+                <ul class="tournament-bracket__list">
+                    <!-- STAGE 1 -->
+                    <li class="tournament-bracket__item">
+                        <div class="tournament-bracket__match" tabindex="0">
+                            <div class="flex full-width">
+                                <span class="align-center ellipsis" style="max-width: calc(100% - 38px);"
+                                    data-toggle="tooltip"
+                                    title="{{model.TOURNAMENT.QUARTER_FINAL[0].FIRST_TEAM.NAME}}">{{model.TOURNAMENT.QUARTER_FINAL[0].FIRST_TEAM.NAME}}</span>
+                                <span class="flex-right">
+                                    <img src="assets/play.png" class="icon" width="30" height="30" alt="Define ganhador"
+                                        tooltip-placement="auto top" uib-tooltip="Define ganhador"
+                                        tooltip-append-to-body="true" title="Define ganhador"
+                                        ng-click="setQuarterFinalWinner(0, model.TOURNAMENT.QUARTER_FINAL[0].FIRST_TEAM.ID)" />
+                                </span>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="tournament-bracket__item">
+                        <div class="tournament-bracket__match" tabindex="0">
+                            <div class="flex full-width">
+                                <span class="align-center ellipsis" style="max-width: calc(100% - 38px);"
+                                    data-toggle="tooltip"
+                                    title="{{model.TOURNAMENT.QUARTER_FINAL[0].SECOND_TEAM.NAME}}">{{model.TOURNAMENT.QUARTER_FINAL[0].SECOND_TEAM.NAME}}</span>
+                                <span class="flex-right">
+                                    <img src="assets/play.png" class="icon" width="30" height="30" alt="Define ganhador"
+                                        tooltip-placement="auto top" uib-tooltip="Define ganhador"
+                                        tooltip-append-to-body="true" title="Define ganhador"
+                                        ng-click="setQuarterFinalWinner(0, model.TOURNAMENT.QUARTER_FINAL[0].SECOND_TEAM.ID)" />
+                                </span>
+                            </div>
+                        </div>
+                    </li>
+                    <!-- STAGE 2 -->
+                    <li class="tournament-bracket__item">
+                        <div class="tournament-bracket__match" tabindex="0">
+                            <div class="flex full-width">
+                                <span class="align-center ellipsis" style="max-width: calc(100% - 38px);"
+                                    data-toggle="tooltip"
+                                    title="{{model.TOURNAMENT.QUARTER_FINAL[1].FIRST_TEAM.NAME}}">{{model.TOURNAMENT.QUARTER_FINAL[1].FIRST_TEAM.NAME}}</span>
+                                <span class="flex-right">
+                                    <img src="assets/play.png" class="icon" width="30" height="30" alt="Define ganhador"
+                                        tooltip-placement="auto top" uib-tooltip="Define ganhador"
+                                        tooltip-append-to-body="true" title="Define ganhador"
+                                        ng-click="setQuarterFinalWinner(1, model.TOURNAMENT.QUARTER_FINAL[1].FIRST_TEAM.ID)" />
+                                </span>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="tournament-bracket__item">
+                        <div class="tournament-bracket__match" tabindex="0">
+                            <div class="flex full-width">
+                                <span class="align-center ellipsis" style="max-width: calc(100% - 38px);"
+                                    data-toggle="tooltip"
+                                    title="{{model.TOURNAMENT.QUARTER_FINAL[1].SECOND_TEAM.NAME}}">{{model.TOURNAMENT.QUARTER_FINAL[1].SECOND_TEAM.NAME}}</span>
+                                <span class="flex-right">
+                                    <img src="assets/play.png" class="icon" width="30" height="30" alt="Define ganhador"
+                                        tooltip-placement="auto top" uib-tooltip="Define ganhador"
+                                        tooltip-append-to-body="true" title="Define ganhador"
+                                        ng-click="setQuarterFinalWinner(1, model.TOURNAMENT.QUARTER_FINAL[1].SECOND_TEAM.ID)" />
+                                </span>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="tournament-bracket__round tournament-bracket__round--semifinals">
+                <h3 class="tournament-bracket__round-title">Semifinal</h3>
+                <ul class="tournament-bracket__list">
+                    <li class="tournament-bracket__item">
+                        <div class="tournament-bracket__match" tabindex="0">
+                            <div class="flex full-width">
+                                <span class="align-center ellipsis" ng-style="{'max-width': model.TOURNAMENT.SEMI_FINAL.FIRST_TEAM && model.TOURNAMENT.SEMI_FINAL.SECOND_TEAM ? 'calc(100% - 38px)' : '100%'}"
+                                    data-toggle="tooltip"
+                                    title="{{model.TOURNAMENT.SEMI_FINAL.FIRST_TEAM ? model.TOURNAMENT.SEMI_FINAL.FIRST_TEAM.NAME : 'Aguardando decisão'}}">
+                                    {{model.TOURNAMENT.SEMI_FINAL.FIRST_TEAM ? model.TOURNAMENT.SEMI_FINAL.FIRST_TEAM.NAME : 'Aguardando decisão'}}
+                                </span>
+                                <span class="flex-right" ng-show="model.TOURNAMENT.SEMI_FINAL.FIRST_TEAM && model.TOURNAMENT.SEMI_FINAL.SECOND_TEAM">
+                                    <img src="assets/play.png" class="icon" width="30" height="30" alt="Define ganhador"
+                                        tooltip-placement="auto top" uib-tooltip="Define ganhador"
+                                        tooltip-append-to-body="true" title="Define ganhador"
+                                        ng-click="setFinalWinner(model.TOURNAMENT.SEMI_FINAL.FIRST_TEAM.ID)" />
+                                </span>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="tournament-bracket__item">
+                        <div class="tournament-bracket__match" tabindex="0">
+                            <div class="flex full-width">
+                                <span class="align-center ellipsis" ng-style="{'max-width': model.TOURNAMENT.SEMI_FINAL.SECOND_TEAM && model.TOURNAMENT.SEMI_FINAL.FIRST_TEAM ? 'calc(100% - 38px)' : '100%'}"
+                                    data-toggle="tooltip"
+                                    title="{{model.TOURNAMENT.SEMI_FINAL.SECOND_TEAM ? model.TOURNAMENT.SEMI_FINAL.SECOND_TEAM.NAME : 'Aguardando decisão'}}">
+                                    {{model.TOURNAMENT.SEMI_FINAL.SECOND_TEAM ? model.TOURNAMENT.SEMI_FINAL.SECOND_TEAM.NAME : 'Aguardando decisão'}}
+                                </span>
+                                <span class="flex-right" ng-show="model.TOURNAMENT.SEMI_FINAL.SECOND_TEAM && model.TOURNAMENT.SEMI_FINAL.FIRST_TEAM">
+                                    <img src="assets/play.png" class="icon" width="30" height="30" alt="Define ganhador"
+                                        tooltip-placement="auto top" uib-tooltip="Define ganhador"
+                                        tooltip-append-to-body="true" title="Define ganhador"
+                                        ng-click="setFinalWinner(model.TOURNAMENT.SEMI_FINAL.SECOND_TEAM.ID)" />
+                                </span>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="tournament-bracket__round tournament-bracket__round--bronze">
+                <h3 class="tournament-bracket__round-title">Ganhador</h3>
+                <ul class="tournament-bracket__list">
+                    <li class="tournament-bracket__item">
+                        <div class="tournament-bracket__match" tabindex="0">
+                            {{model.TOURNAMENT.WINNER ? model.TOURNAMENT.WINNER.NAME : 'Aguardando decisão'}}
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            
+        </div>
+        <toaster-container toaster-options="{'position-class': 'toast-bottom-full-width'}"></toaster-container>
+    </div>
+    <nav class="navbar fixed-bottom navbar-dark bg-dark">
+        <a class="navbar-brand">Pratinhas não passarão</a>
+      </nav>
+    <!-- Manage Team Modal -->
+    <div id="manageTeamModal" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog"
+        aria-labelledby="manageTeamModal" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header bg-dark">
+                    <h5 class="modal-title">Team Management</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <ul class="list-group">
+                        <li class="list-group-item" ng-repeat="team in modalTeams track by $index">
+                            <input type="text" class="form-control" name="team{{$index}}" ng-model="team.NAME"
+                                placeholder="Campo obrigatório" maxlength="80" required>
+                        </li>
+                    </ul>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" ng-click="manageTeamsSave();">Salvar</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Fechar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="bundle.js" charset="utf-8"></script>
+</body>
+
+</html>
